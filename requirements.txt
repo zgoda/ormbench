@@ -1,0 +1,10 @@
+# ORMs
+Pony
+Peewee
+SQLAlchemy
+
+# profiler
+memory-profiler
+
+# utilities
+Faker
