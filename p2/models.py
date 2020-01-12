@@ -20,5 +20,6 @@ class Post(db.Entity):
     text = Required(str)
 
 
-db.bind(provider='sqlite', filename=os.environ['DB_PATH'], create_db=True)
+db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'db.sqlite'))
+db.bind(provider='sqlite', filename=db_path, create_db=True)
 db.generate_mapping(create_tables=True)
