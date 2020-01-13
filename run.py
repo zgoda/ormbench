@@ -1,3 +1,5 @@
+import os
+
 from argparse import ArgumentParser, Namespace
 from importlib import import_module
 
@@ -11,12 +13,19 @@ def get_options() -> Namespace:
     return opts
 
 
+def clean(mod_name: str):
+    db_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), mod_name, 'db.sqlite')
+    )
+    os.unlink(db_path)
+
+
 def run_profile(mod_name: str):
     module = import_module(mod_name)
     try:
         module.populate(120, 60)
     finally:
-        module.clean()
+        clean(mod_name)
 
 
 def main():

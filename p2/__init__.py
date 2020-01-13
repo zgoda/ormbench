@@ -1,6 +1,5 @@
 """Pony ORM
 """
-import os
 from datetime import datetime
 
 from faker import Faker
@@ -29,8 +28,3 @@ def populate(num_people: int, num_posts: int):
     elapsed = datetime.utcnow() - t0
     elapsed = elapsed.total_seconds()
     print(f'total time: {elapsed}')
-
-
-def clean():
-    db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'db.sqlite'))
-    os.unlink(db_path)

@@ -30,16 +30,17 @@ Test 1: insert multiple
 Insert 120 ``User`` objects and for each ``User`` object insert 60 related
 objects (``Post``).
 
-This test uses all available bulk loading techniques for particular library
+This test uses all available batch loading techniques for particular library
 without resorting to raw SQL and operating on domain objects if possible
-(SQLA-core operates at expression level).
+(SQLA-core operates at expression level). No library-specific optimizations
+are made, only generic Python code structure optimizations.
 
 Results
 ^^^^^^^
 
 Memory utilization varied from 29.0 MiB (Peewee) to 59.3 MiB (SQLAlchemy ORM),
-with SQLA-core (38.5 MiB) and Pony (42.6 MiB) in the middle.
+with SQLA-core (38.9 MiB) and Pony (42.6 MiB) in the middle.
 
-Execution time varied from 38.7 seconds (SQLAlchemy core) to 48.6 seconds
+Execution time varied from 38.6 seconds (SQLAlchemy core) to 48.6 seconds
 (SQLAlchemy ORM), with Peewee almost catching SQLA-ORM and Pony being in the
 middle.
