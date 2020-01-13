@@ -9,6 +9,7 @@ def get_options() -> Namespace:
     parser.add_argument(
         'module', choices=['peewee', 'pony', 'sqla-orm', 'sqla-core']
     )
+    parser.add_argument('-t', '--test', default='all')
     opts = parser.parse_args()
     return opts
 
@@ -20,10 +21,16 @@ def clean(mod_name: str):
     os.unlink(db_path)
 
 
-def run_profile(mod_name: str):
+def run_profile(mod_name: str, test: str):
     module = import_module(mod_name)
     try:
-        module.populate(120, 60)
+        if test == 'all':
+            module.populate(120, 60)
+        else:
+            test_func = getattr(module, test, None)
+            if test_func is None:
+                raise RuntimeError(f'{test_func} not available for {mod_name}')
+            test_func()
     finally:
         clean(mod_name)
 
@@ -37,7 +44,7 @@ def main():
 
     }
     opts = get_options()
-    run_profile(module_name_map[opts.module])
+    run_profile(module_name_map[opts.module], opts.test)
 
 
 if __name__ == '__main__':
